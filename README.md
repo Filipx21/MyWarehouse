@@ -1,7 +1,7 @@
 ## Warehouse Application ##
 The application is used to store company resources and uses Spring Boot and AngularJS
 
-### Table of contents#
+### Contents ###
 * [Built With](#built-with)
 * [Technologies](#technologies)
 * [Prerequisites](#prerequisites)
