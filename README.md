@@ -2,18 +2,17 @@
 The application is used to store company resources and uses Spring Boot and AngularJS
 
 ### Contents ###
-* [Built With](#built-with)
 * [Technologies](#technologies)
+* [Built With](#built-with)
 * [Prerequisites](#prerequisites)
 * [Running the Web Application](#running-the-web-application)
 * [Running the tests](#running-the-tests)
 * [Author](#author)
-
-### Built With ###
-+ [Maven](https://maven.apache.org/) - Dependency Management
 ### Technologies ###
 + Spring Boot
 + AngularJS
+### Built With ###
++ [Maven](https://maven.apache.org/) - Dependency Management
 ### Prerequisites ###
 + JDK11
 ### Running the Web Application ###
