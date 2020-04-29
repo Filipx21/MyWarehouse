@@ -1,6 +1,6 @@
 ## Warehouse Application ##
 The application is used to store company resources and uses Spring Boot and AngularJS
-## Built With ##
+### Built With ###
 + [Maven](https://maven.apache.org/) - Dependency Management
-## Author ##
+### Author ###
 + [Filipx21](https://github.com/Filipx21)
