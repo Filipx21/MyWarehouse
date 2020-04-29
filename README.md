@@ -2,6 +2,11 @@
 The application is used to store company resources and uses Spring Boot and AngularJS
 ### Built With ###
 + [Maven](https://maven.apache.org/) - Dependency Management
+### Running the Web Application ###
+You can run the web application by using the following command:
+```
+mvn clean spring-boot:run -P dev
+```
 ### Running the tests ###
 You can run unit tests by using by using the following command:
 ```
