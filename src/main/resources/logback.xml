@@ -1,0 +1,42 @@
+<configuration debug="true">
+
+    <property resource="application.properties"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender" target="SYSTEM_OUT">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{HH:mm:ss:SSS} [%t] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="database" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>${logback.db_drive}</driverClass>
+            <url>${logback.db_url}</url>
+            <user>${logback.db_login}</user>
+            <password>${logback.db_pass}</password>
+        </connectionSource>
+    </appender>
+
+    <logger name="console" level="info" additivity="true">
+        <appender-ref ref="console"/>
+        <appender-ref ref="database"/>
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="console"/>
+        <appender-ref ref="database"/>
+    </root>
+
+    <root level="warning">
+        <appender-ref ref="console"/>
+        <appender-ref ref="database"/>
+    </root>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="database"/>
+    </root>
+
+</configuration>
