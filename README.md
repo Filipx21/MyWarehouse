@@ -4,8 +4,6 @@ The application is used to store company resources and uses Spring Boot and Angu
 + [Maven](https://maven.apache.org/) - Dependency Management
 ### Running the tests ###
 You can run unit tests by using by using the following command:
-```
-mvn clean test -P dev
-```
+```mvn clean test -P dev```
 ### Author ###
 + [Filipx21](https://github.com/Filipx21)
