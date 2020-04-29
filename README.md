@@ -1,7 +1,21 @@
 ## Warehouse Application ##
 The application is used to store company resources and uses Spring Boot and AngularJS
+
+### Table of contents#
+* [Built With](#built-with)
+* [Technologies](#technologies)
+* [Prerequisites](#prerequisites)
+* [Running the Web Application](#running-the-web-application)
+* [Running the tests](#running-the-tests)
+* [Author](#author)
+
 ### Built With ###
 + [Maven](https://maven.apache.org/) - Dependency Management
+### Technologies ###
++ Spring Boot
++ AngularJS
+### Prerequisites ###
++ JDK11
 ### Running the Web Application ###
 You can run the web application by using the following command:
 ```
