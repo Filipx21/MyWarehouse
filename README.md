@@ -26,4 +26,4 @@ You can run unit tests by using by using the following command:
 mvn clean test -P dev
 ```
 ### Author ###
-+ [Filipx21](https://github.com/Filipx21)
++ [Filip Zajac](https://github.com/Filipx21)
