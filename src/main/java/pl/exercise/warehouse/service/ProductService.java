@@ -88,7 +88,7 @@ public class ProductService {
         }
     }
 
-    public Collection<Product> getAllByCategory(Category category) {
+    public List<Product> getAllByCategory(Category category) {
         List<Product> products = productRepository.findAllByCategory(category);
         if (products.size() > 0) {
             logger.info("Products by category found");
