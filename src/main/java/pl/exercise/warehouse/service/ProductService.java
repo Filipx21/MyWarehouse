@@ -9,7 +9,6 @@ import pl.exercise.warehouse.model.Category;
 import pl.exercise.warehouse.model.Product;
 import pl.exercise.warehouse.repository.ProductRepository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,7 +89,7 @@ public class ProductService {
     }
 
     public Collection<Product> getAllByCategory(Category category) {
-        Collection<Product> products = productRepository.findAllByCategory(category);
+        List<Product> products = productRepository.findAllByCategory(category);
         if (products.size() > 0) {
             logger.info("Products by category found");
             return products;
