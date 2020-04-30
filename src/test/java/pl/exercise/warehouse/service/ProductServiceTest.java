@@ -30,6 +30,7 @@ class ProductServiceTest {
     private ProductService productService;
 
     @Test
+    @DisplayName("Add product without id - return Product")
     void shouldAddNewProductWithoutId() throws NullPointerException {
         Product expected = prepareProduct();
 
@@ -41,6 +42,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Add product without id and data - throw NullPointerException")
     void shouldThrowExceptionNewProductWithoutIdAndData() throws NullPointerException {
         Product expected = new Product();
 
@@ -52,6 +54,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Update product with id - return new Product")
     void shouldUpdateOldProductWithId() throws NullPointerException {
         Product expected = prepareProduct();
         expected.setId(1L);
@@ -65,7 +68,8 @@ class ProductServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionOldProductWithoutId() throws NullPointerException {
+    @DisplayName("Update product without id - throw NullPointerException")
+    void shouldThrowExceptionUpdateOldProductWithoutId() throws NullPointerException {
         Product expected = prepareProduct();
 
         assertThrows(NullPointerException.class, () ->
@@ -74,6 +78,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Update product, no product in db - throw NullPointerException")
     void shouldThrowExceptionNewProductWithIdTryUpdate() throws NullPointerException {
         Product expected = prepareProduct();
         expected.setId(1L);
@@ -86,6 +91,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Delete by id - throw NullPointerException")
     void shouldThrowExceptionDeleteById() throws NullPointerException {
         Product expected = prepareProduct();
 
@@ -97,6 +103,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Get by id - return Product")
     void shouldGetById() throws NullPointerException {
         Product expected = prepareProduct();
         expected.setId(1L);
@@ -109,6 +116,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Get by id - throw NullPointerException")
     void shouldThrowExceptionGetById() throws NullPointerException {
         Product expected = prepareProduct();
         expected.setId(1L);
@@ -121,6 +129,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Get all - return List<Product>")
     void shouldGetAll() throws NullPointerException {
         Product product1 = prepareProduct();
         Product product2 = prepareProduct();
@@ -137,6 +146,7 @@ class ProductServiceTest {
     }
 
     @Test
+    @DisplayName("Get all - throw NullPointerException")
     void shouldThrowExceptionGetAll() throws NullPointerException {
         List<Product> expected = new ArrayList<>();
 
@@ -148,7 +158,8 @@ class ProductServiceTest {
     }
 
     @Test
-    void getAllByCategory() throws NullPointerException {
+    @DisplayName("Get by category - return Product")
+    void shouldGetAllByCategory() throws NullPointerException {
     }
 
     private Product prepareProduct() {
