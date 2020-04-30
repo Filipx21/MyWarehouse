@@ -115,7 +115,7 @@ class ProductServiceTest {
         when(productRepository.findById(expected.getId())).thenReturn(Optional.empty());
 
         assertThrows(NullPointerException.class, () ->
-                productService.deleteById(expected.getId())
+                productService.getById(expected.getId())
         );
     }
 
