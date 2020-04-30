@@ -1,5 +1,6 @@
 package pl.exercise.warehouse.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Test Product")
 class ProductServiceTest {
 
     @Mock
