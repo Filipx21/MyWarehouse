@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import pl.exercise.warehouse.model.Category;
 import pl.exercise.warehouse.model.Product;
 
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Collection<Product> findAllByCategory(Category category);
+    List<Product> findAllByCategory(Category category);
 
 }
