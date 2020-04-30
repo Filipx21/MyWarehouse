@@ -29,7 +29,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Get all products - return List<Product>")
-    void shouldGetAll() throws NullPointerException{
+    void shouldGetAll() throws NullPointerException {
         Producer producer1 = prepareProducer();
         Producer producer2 = prepareProducer();
         Producer producer3 = prepareProducer();
@@ -46,7 +46,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Get all products - throw NullPointerException")
-    void shouldThrowExceptionGetAll() throws NullPointerException{
+    void shouldThrowExceptionGetAll() throws NullPointerException {
         List<Producer> expected = new ArrayList<>();
 
         when(producerRepository.findAll()).thenReturn(expected);
@@ -58,7 +58,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Get by id - return Product")
-    void shouldGetById() throws NullPointerException{
+    void shouldGetById() throws NullPointerException {
         Producer expected = prepareProducer();
         expected.setId(1L);
 
@@ -71,7 +71,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Get by id - throw NullPointerException")
-    void shouldThrowExceptionGetById() throws NullPointerException{
+    void shouldThrowExceptionGetById() throws NullPointerException {
         Producer expected = prepareProducer();
         expected.setId(1L);
 
@@ -96,7 +96,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Add new product - throw NullPointerException")
-    void shouldThrowExceptionAdd() throws NullPointerException{
+    void shouldThrowExceptionAdd() throws NullPointerException {
         Producer expected = null;
 
         assertThrows(NullPointerException.class, () ->
@@ -106,7 +106,7 @@ class ProducerServiceTest {
 
     @Test
     @DisplayName("Delete by id - throw NullPointerException")
-    void shouldThrowExceptionDeleteById() throws NullPointerException{
+    void shouldThrowExceptionDeleteById() throws NullPointerException {
         Producer expected = prepareProducer();
 
         when(producerRepository.findById(expected.getId())).thenReturn(Optional.empty());
@@ -116,7 +116,7 @@ class ProducerServiceTest {
         );
     }
 
-    private Producer prepareProducer(){
+    private Producer prepareProducer() {
         Producer producer = new Producer();
         producer.setCompanyName("Waldemar");
         producer.setOwner("Edward Kosa");
