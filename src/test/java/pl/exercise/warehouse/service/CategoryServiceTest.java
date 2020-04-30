@@ -1,5 +1,6 @@
 package pl.exercise.warehouse.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+@DisplayName("Test Category")
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
 
@@ -22,7 +24,8 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Test
-    void shouldAddNewProductWithoutId() throws NullPointerException {
+    @DisplayName("Add category without id - return Category")
+    void shouldAddNewCategoryWithoutId() throws NullPointerException {
         Category expected = prepareCategory();
 
         when(categoryRepository.save(expected)).thenReturn(expected);
@@ -33,7 +36,8 @@ class CategoryServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionNewProductWithoutIdAndData() throws NullPointerException {
+    @DisplayName("Add category without id and data - throw NullPointerException")
+    void shouldThrowExceptionNewCategoryWithoutIdAndData() throws NullPointerException {
         Category expected = new Category();
 
         when(categoryRepository.save(expected)).thenThrow(NullPointerException.class);
