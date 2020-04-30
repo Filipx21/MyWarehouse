@@ -125,4 +125,5 @@ class ProducerServiceTest {
         producer.setProducts(new ArrayList<>());
         return producer;
     }
+
 }
