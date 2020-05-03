@@ -35,8 +35,9 @@ public class CategoryService {
         if (optionalProduct.isPresent()) {
             logger.info("Category deleted");
             categoryRepository.deleteById(id);
+        } else {
+            logger.warn("Problem while deleting category");
+            throw new NullPointerException("Problem while deleting category");
         }
-        logger.warn("Problem while deleting category");
-        throw new NullPointerException("Problem while deleting category");
     }
 }
