@@ -56,9 +56,10 @@ public class ProducerService {
         if (optionalProduct.isPresent()) {
             logger.info("Producer deleted");
             producerRepository.deleteById(id);
+        } else {
+            logger.warn("Problem while deleting producer");
+            throw new NullPointerException("Problem while deleting producer");
         }
-        logger.warn("Problem while deleting producer");
-        throw new NullPointerException("Problem while deleting producer");
     }
 
 }
