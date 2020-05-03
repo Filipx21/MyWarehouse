@@ -51,9 +51,10 @@ public class ProductService {
         if (optionalProduct.isPresent()) {
             logger.info("Product deleted");
             productRepository.deleteById(id);
+        } else {
+            logger.warn("Problem while deleting product");
+            throw new NullPointerException("Problem while deleting product");
         }
-        logger.warn("Problem while deleting product");
-        throw new NullPointerException("Problem while deleting product");
     }
 
     public Product getById(Long id) {
