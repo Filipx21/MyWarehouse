@@ -25,8 +25,8 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryDto category){
-        try{
+    public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryDto category) {
+        try {
             Category _category = categoryMapper.toCategory(category);
             Category addedCategory = categoryService.add(_category);
             CategoryDto categoryDto = categoryMapper.toCategoryDto(addedCategory);
@@ -35,13 +35,13 @@ public class CategoryController {
                     .buildAndExpand(addedCategory.getId())
                     .toUri();
             return ResponseEntity.created(uri).body(categoryDto);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @DeleteMapping("/category")
-    public ResponseEntity<Object> deleteCategory(@PathVariable("id") Long id){
+    public ResponseEntity<Object> deleteCategory(@PathVariable("id") Long id) {
         try {
             categoryService.deleteById(id);
             return ResponseEntity.noContent().build();
