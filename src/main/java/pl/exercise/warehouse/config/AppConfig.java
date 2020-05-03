@@ -24,4 +24,5 @@ public class AppConfig {
     public CategoryMapper categoryMapper() {
         return Mappers.getMapper(CategoryMapper.class);
     }
+
 }
