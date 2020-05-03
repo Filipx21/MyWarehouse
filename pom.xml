@@ -19,6 +19,7 @@
         <ch.qos.logback>1.2.3</ch.qos.logback>
         <org.projectlombok>1.18.12</org.projectlombok>
         <maven.compiler.plugin>3.8.1</maven.compiler.plugin>
+        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
     </properties>
 
     <dependencies>
@@ -35,6 +36,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${ch.qos.logback}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
         </dependency>
 
 
@@ -80,6 +86,18 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
