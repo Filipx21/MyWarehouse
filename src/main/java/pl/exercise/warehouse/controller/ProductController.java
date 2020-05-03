@@ -56,11 +56,12 @@ public class ProductController {
         try {
             Product _product = productMapper.toProduct(product);
             Product addedProduct = productService.add(_product);
+            ProductDto productDto = productMapper.toProductDto(addedProduct);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(addedProduct.getId())
                     .toUri();
-            return ResponseEntity.created(uri).body(productMapper.toProductDto(addedProduct));
+            return ResponseEntity.created(uri).body(productDto);
         } catch(Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
