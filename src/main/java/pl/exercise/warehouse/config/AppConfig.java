@@ -1,5 +1,8 @@
 package pl.exercise.warehouse.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.mapstruct.factory.Mappers;
 
 import org.springframework.context.annotation.Bean;
@@ -25,6 +28,12 @@ public class AppConfig {
     @Bean
     public CategoryMapper categoryMapper() {
         return Mappers.getMapper(CategoryMapper.class);
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper()
+                .registerModule(new JavaTimeModule());
     }
 
 }
