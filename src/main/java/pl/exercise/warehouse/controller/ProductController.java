@@ -46,7 +46,7 @@ public class ProductController {
                     .map(productMapper::toProductDto)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(productsDto);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -62,19 +62,19 @@ public class ProductController {
                     .buildAndExpand(addedProduct.getId())
                     .toUri();
             return ResponseEntity.created(uri).body(productDto);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/product")
-    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto product){
+    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto product) {
         try {
             Product _product = productMapper.toProduct(product);
             Product updatedProduct = productService.update(_product);
             ProductDto productDto = productMapper.toProductDto(updatedProduct);
             return ResponseEntity.ok().body(productDto);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -84,8 +84,9 @@ public class ProductController {
         try {
             productService.deleteById(id);
             return ResponseEntity.noContent().build();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }
