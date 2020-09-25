@@ -12,6 +12,7 @@ import pl.exercise.warehouse.repository.CategoryRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Test Category Service")
@@ -46,6 +47,13 @@ class CategoryServiceTest {
         assertThrows(NullPointerException.class, () ->
                 categoryService.add(expected)
         );
+    }
+
+    @Test
+    @DisplayName("Delete category by id - return true")
+    void shouldDeleteCategoryById() throws Exception {
+        var idCategoryToDelete = 1L;
+
     }
 
     private Category prepareCategory() {
