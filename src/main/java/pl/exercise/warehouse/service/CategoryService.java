@@ -30,14 +30,14 @@ public class CategoryService {
         throw new NullPointerException("Problem while adding category");
     }
 
-    public void deleteById(Long id){
+    public boolean deleteById(Long id) {
         Optional<Category> optionalProduct = categoryRepository.findById(id);
         if (optionalProduct.isPresent()) {
-            logger.info("Category deleted");
             categoryRepository.deleteById(id);
-        } else {
-            logger.warn("Problem while deleting category");
-            throw new NullPointerException("Problem while deleting category");
+            logger.info("Category deleted");
+            return true;
         }
+        logger.warn("Problem while deleting category");
+        throw new NullPointerException("Problem while deleting category");
     }
 }
