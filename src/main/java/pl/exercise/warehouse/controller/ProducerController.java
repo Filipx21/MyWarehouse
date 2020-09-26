@@ -69,8 +69,11 @@ public class ProducerController {
     @DeleteMapping("/producer/{id}")
     public ResponseEntity<Object> deleteProducer(@PathVariable("id") Long id) {
         try {
-            producerService.deleteById(id);
-            return ResponseEntity.noContent().build();
+            if(producerService.deleteById(id)){
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
