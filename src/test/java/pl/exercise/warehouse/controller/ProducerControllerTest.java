@@ -1,6 +1,8 @@
 package pl.exercise.warehouse.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,11 @@ import pl.exercise.warehouse.service.ProducerService;
 
 import java.util.ArrayList;
 
+@DisplayName("Producer Controller")
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = ProducerController.class)
 @ComponentScan(basePackageClasses = {REST_TestConfig.class})
-public class ProducerControllerTest {
+class ProducerControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -29,15 +32,18 @@ public class ProducerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ProducerMapper producerMapper;
+    private ProducerMapper mapper;
 
     @MockBean
-    private ProducerService producerService;
+    private ProducerService service;
+
+    @Test
+    void test() throws Exception {
+        System.out.println(mapper.toProducer(prepaereProducerDto()));
+    }
 
 
-
-
-    private ProducerDto prepaereProducer() {
+    private ProducerDto prepaereProducerDto() {
         var producer = new ProducerDto();
         producer.setCompanyName("TeleFront");
         producer.setOwner("Marek Jakowski");
