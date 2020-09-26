@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import pl.exercise.warehouse.controller.config.REST_TestConfig;
 import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.mapper.ProducerMapper;
@@ -24,7 +23,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Producer Controller")
@@ -139,6 +140,81 @@ class ProducerControllerTest {
         assertEquals("", result);
     }
 
+    @Test
+    @DisplayName("Save producer - return URI")
+    void shouldSaveProducer() throws Exception {
+        var producerFromWeb = prepareProducerDto();
+        var expected = mapper.toProducer(producerFromWeb);
+
+        when(service.add(expected)).thenReturn(expected);
+
+        var mvcResult = mockMvc.perform(
+                post("/api/producer/producer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(producerFromWeb))
+                .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status()
+                .isCreated()
+        ).andReturn();
+
+        var jsonString = mvcResult.getResponse().getContentAsString();
+        var result = objectMapper.readValue(jsonString, Producer.class);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("Save producer - return Error 500")
+    void shouldReturnError500SaveProducer() throws Exception {
+        var producerFromWeb = prepareProducerDto();
+        Producer producer = null;
+
+        when(service.add(null)).thenThrow(NullPointerException.class);
+
+        var mvcResult = mockMvc.perform(
+                post("/api/producer/producer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(producerFromWeb))
+                .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status()
+                .isInternalServerError()
+        ).andReturn();
+
+        var result = mvcResult.getResponse().getContentAsString();
+
+        assertEquals("", result);
+    }
+
+    @Test
+    @DisplayName("Delete producer - delete from db")
+    void shouldDeleteProducerFromDb() throws Exception {
+        var idProducerToDelete = 1L;
+
+        when(service.deleteById(idProducerToDelete)).thenReturn(true);
+
+        mockMvc.perform(delete("/api/producer/producer/{id}", idProducerToDelete)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isNoContent()
+                );
+    }
+
+    @Test
+    @DisplayName("Delete producer - return error 500")
+    void shouldReturnError500ForError() throws Exception {
+        var idProducerToDelete = 1L;
+
+        when(service.deleteById(idProducerToDelete))
+                .thenThrow(NullPointerException.class);
+
+        mockMvc.perform(delete("/api/producer/producer/{id}", idProducerToDelete)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isInternalServerError()
+                );
+    }
 
     private ProducerDto prepareProducerDto() {
         var producer = new ProducerDto();
@@ -149,33 +225,5 @@ class ProducerControllerTest {
         producer.setProducts(new ArrayList<>());
         return producer;
     }
-    /*
-
-    @PostMapping("/producer")
-    public ResponseEntity<ProducerDto> saveProducer(@Valid @RequestBody ProducerDto producer) {
-        try {
-            Producer _producer = producerMapper.toProducer(producer);
-            Producer addedProducer = producerService.add(_producer);
-            ProducerDto producerDto = producerMapper.toProducerDto(addedProducer);
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(addedProducer.getId())
-                    .toUri();
-            return ResponseEntity.created(uri).body(producerDto);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @DeleteMapping("/producer/{id}")
-    public ResponseEntity<Object> deleteProducer(@PathVariable("id") Long id) {
-        try {
-            producerService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-     */
 
 }
