@@ -38,20 +38,20 @@ class CategoryControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private CategoryMapper mapper;
 
     @MockBean
-    private CategoryService categoryService;
+    private CategoryService service;
 
     @Test
     @DisplayName("Save category - return URI")
     void shouldSaveCategory() throws Exception {
         var category = prepareCategory();
         var expected = objectMapper.writeValueAsString(
-                categoryMapper.toCategory(category));
+                mapper.toCategory(category));
 
-        when(categoryService.add(categoryMapper.toCategory(category)))
-                .thenReturn(categoryMapper.toCategory(category));
+        when(service.add(mapper.toCategory(category)))
+                .thenReturn(mapper.toCategory(category));
 
         var mvcResult = mockMvc.perform(post("/api/category/category")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ class CategoryControllerTest {
     void shouldThrowExceptionSaveCategory() throws Exception {
         var categoryFromUser = prepareCategory();
 
-        when(categoryService.add(categoryMapper.toCategory(categoryFromUser)))
+        when(service.add(mapper.toCategory(categoryFromUser)))
                 .thenThrow(NullPointerException.class);
 
         mockMvc.perform(post("/api/category/category")
@@ -88,7 +88,7 @@ class CategoryControllerTest {
     void shouldDeleteCategory() throws Exception {
         var idCategoryToDelete = 1L;
 
-        when(categoryService.deleteById(idCategoryToDelete)).thenReturn(true);
+        when(service.deleteById(idCategoryToDelete)).thenReturn(true);
 
         mockMvc.perform(delete("/api/category/delete_category/{id}", idCategoryToDelete)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ class CategoryControllerTest {
     void shouldReturnError500ForError() throws Exception {
         var idCategoryToDelete = 1L;
 
-        when(categoryService.deleteById(idCategoryToDelete))
+        when(service.deleteById(idCategoryToDelete))
                 .thenThrow(NullPointerException.class);
 
         mockMvc.perform(delete("/api/category/delete_category/{id}", idCategoryToDelete)
