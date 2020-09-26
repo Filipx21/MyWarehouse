@@ -26,6 +26,7 @@ import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.mapper.CategoryMapper;
 import pl.exercise.warehouse.service.CategoryService;
 
+@DisplayName("Category Controller")
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = CategoryController.class)
 @ComponentScan(basePackageClasses = {REST_TestConfig.class})
