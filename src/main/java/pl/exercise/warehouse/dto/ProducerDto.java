@@ -66,4 +66,16 @@ public class ProducerDto {
     public void setProducts(List<ProductDto> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return "ProducerDto{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", owner='" + owner + '\'' +
+                ", address='" + address + '\'' +
+                ", opinion=" + opinion +
+                ", products=" + products +
+                '}';
+    }
 }
