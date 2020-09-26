@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import pl.exercise.warehouse.controller.config.REST_TestConfig;
+import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.model.Producer;
 import pl.exercise.warehouse.model.Product;
 
@@ -17,8 +18,8 @@ public class ProducerControllerTest {
 
 
 
-    private Producer prepaereProducer() {
-        var producer = new Producer();
+    private ProducerDto prepaereProducer() {
+        var producer = new ProducerDto();
         producer.setCompanyName("TeleFront");
         producer.setOwner("Marek Jakowski");
         producer.setAddress("Test 44-231 Testowo");
