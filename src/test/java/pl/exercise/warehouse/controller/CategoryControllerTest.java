@@ -114,7 +114,7 @@ class CategoryControllerTest {
     }
 
     private CategoryDto prepareCategory() {
-        CategoryDto category = new CategoryDto();
+        var category = new CategoryDto();
         category.setName("PC");
         return category;
     }
