@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Test Category Service")
+@DisplayName("Category Service")
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
 
