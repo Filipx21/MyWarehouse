@@ -19,7 +19,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,14 +49,14 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Save category - return URI")
     void shouldSaveCategory() throws Exception {
-        CategoryDto category = prepareCategory();
-        Object expected = objectMapper.writeValueAsString(
+        var category = prepareCategory();
+        var expected = objectMapper.writeValueAsString(
                 categoryMapper.toCategory(category));
 
         when(categoryService.add(categoryMapper.toCategory(category)))
                 .thenReturn(categoryMapper.toCategory(category));
 
-        MvcResult mvcResult = mockMvc.perform(post("/api/category/category")
+        var mvcResult = mockMvc.perform(post("/api/category/category")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(category))
                 .accept(MediaType.APPLICATION_JSON))
@@ -73,7 +72,7 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Save category - return error 500")
     void shouldThrowExceptionSaveCategory() throws Exception {
-        CategoryDto categoryFromUser = prepareCategory();
+        var categoryFromUser = prepareCategory();
 
         when(categoryService.add(categoryMapper.toCategory(categoryFromUser)))
                 .thenThrow(NullPointerException.class);
@@ -83,8 +82,8 @@ class CategoryControllerTest {
                 .content(objectMapper.writeValueAsString(categoryFromUser))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                        .isInternalServerError());
-
+                        .isInternalServerError()
+                );
     }
 
     @Test
@@ -94,10 +93,12 @@ class CategoryControllerTest {
 
         when(categoryService.deleteById(idCategoryToDelete)).thenReturn(true);
 
-        mockMvc.perform(delete("/api/category/delete_category/{id}", 1L)
+        mockMvc.perform(delete("/api/category/delete_category/{id}", idCategoryToDelete)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+            .andExpect(status()
+                    .isNoContent()
+            );
     }
 
     @Test
