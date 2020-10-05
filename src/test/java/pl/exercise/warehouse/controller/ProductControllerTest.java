@@ -189,11 +189,11 @@ class ProductControllerTest {
     @Test
     @DisplayName("Delete product - delete from db")
     void shouldDeleteProductFromDb() throws Exception {
-        var idProducerToDelete = 1L;
+        var idProductToDelete = 1L;
 
-        when(service.deleteById(idProducerToDelete)).thenReturn(true);
+        when(service.deleteById(idProductToDelete)).thenReturn(true);
 
-        mockMvc.perform(delete("/api/product/product/{id}", idProducerToDelete)
+        mockMvc.perform(delete("/api/product/product/{id}", idProductToDelete)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
@@ -201,7 +201,21 @@ class ProductControllerTest {
                 );
     }
 
+    @Test
+    @DisplayName("Delete product - return error 500")
+    void shouldReturnError500ForDeleteFromDb() throws Exception {
+        var idProductToDelete = 1L;
 
+        when(service.deleteById(idProductToDelete))
+                .thenThrow(NullPointerException.class);
+
+        mockMvc.perform(delete("/api/product/product/{id}", idProductToDelete)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isInternalServerError()
+                );
+    }
 
     private ProductDto prepareProductDto() {
         var product = new ProductDto();
