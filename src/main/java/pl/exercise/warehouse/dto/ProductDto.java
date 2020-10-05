@@ -85,4 +85,19 @@ public class ProductDto {
     public void setOpinion(int opinion) {
         this.opinion = opinion;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", producer=" + producer +
+                ", category=" + category +
+                ", photoUri='" + photoUri + '\'' +
+                ", opinion=" + opinion +
+                '}';
+    }
+
 }
