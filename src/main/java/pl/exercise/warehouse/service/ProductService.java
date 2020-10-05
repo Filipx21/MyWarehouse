@@ -46,11 +46,12 @@ public class ProductService {
         throw new NullPointerException("Problem while adding product");
     }
 
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
-            logger.info("Product deleted");
             productRepository.deleteById(id);
+            logger.info("Product deleted");
+            return true;
         } else {
             logger.warn("Problem while deleting product");
             throw new NullPointerException("Problem while deleting product");
