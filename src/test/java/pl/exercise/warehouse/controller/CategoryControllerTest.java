@@ -91,7 +91,7 @@ class CategoryControllerTest {
 
         when(service.deleteById(idCategoryToDelete)).thenReturn(true);
 
-        mockMvc.perform(delete("/api/category/delete_category/{id}", idCategoryToDelete)
+        mockMvc.perform(delete("/api/category/category/{id}", idCategoryToDelete)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status()
@@ -107,7 +107,7 @@ class CategoryControllerTest {
         when(service.deleteById(idCategoryToDelete))
                 .thenThrow(NullPointerException.class);
 
-        mockMvc.perform(delete("/api/category/delete_category/{id}", idCategoryToDelete)
+        mockMvc.perform(delete("/api/category/category/{id}", idCategoryToDelete)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
                         .isInternalServerError()
