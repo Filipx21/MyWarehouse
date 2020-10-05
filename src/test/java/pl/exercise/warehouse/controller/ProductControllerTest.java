@@ -81,7 +81,7 @@ class ProductControllerTest {
                 .thenThrow(NullPointerException.class);
 
         var mvcResult = mockMvc.perform(
-                get("/api/producer/producer/{id}", productFromWeb.getId())
+                get("/api/product/product/{id}", productFromWeb.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
         ).andExpect(status()
