@@ -187,6 +187,26 @@ class ProductControllerTest {
     }
 
     @Test
+    @DisplayName("Update product - return product")
+    void shouldUpdateProduct() throws Exception {
+
+
+        //not finished
+
+
+    }
+
+    @Test
+    @DisplayName("Update product - return error 500")
+    void shouldReturnError500UpdateProduct() throws Exception {
+
+
+        //not finished
+
+
+    }
+
+    @Test
     @DisplayName("Delete product - delete from db")
     void shouldDeleteProductFromDb() throws Exception {
         var idProductToDelete = 1L;
