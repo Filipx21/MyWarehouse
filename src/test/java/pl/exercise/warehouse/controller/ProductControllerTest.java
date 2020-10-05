@@ -16,7 +16,6 @@ import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.dto.ProductDto;
 import pl.exercise.warehouse.mapper.ProductMapper;
-import pl.exercise.warehouse.model.Producer;
 import pl.exercise.warehouse.model.Product;
 import pl.exercise.warehouse.service.ProductService;
 
@@ -70,8 +69,26 @@ class ProductControllerTest {
     @Test
     @DisplayName("Find product by id - return Error 404")
     void shouldReturnError404ProductById() throws Exception {
+        var productFromWeb = prepareProductDto();
+        productFromWeb.setId(1L);
 
+        when(service.getById(productFromWeb.getId()))
+                .thenThrow(NullPointerException.class);
+
+        var mvcResult = mockMvc.perform(
+                get("/api/producer/producer/{id}", productFromWeb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status()
+                    .isNotFound()
+                ).andReturn();
+
+        var result = mvcResult.getResponse().getContentAsString();
+
+        assertEquals("", result);
     }
+
+
 
     private ProductDto prepareProductDto() {
         var product = new ProductDto();
