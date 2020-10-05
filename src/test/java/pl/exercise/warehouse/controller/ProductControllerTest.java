@@ -122,6 +122,24 @@ class ProductControllerTest {
         assertEquals(3, result.size());
     }
 
+    @Test
+    @DisplayName("Find all products - return Error 500")
+    void shouldReturnError500FindAllProducts() throws Exception {
+
+        when(service.getAll()).thenThrow(NullPointerException.class);
+
+        var mvcResult = mockMvc.perform(
+                get("/api/product/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status()
+                    .isInternalServerError()
+                ).andReturn();
+
+        var result = mvcResult.getResponse().getContentAsString();
+
+        assertEquals("", result);
+    }
 
 
     private ProductDto prepareProductDto() {
