@@ -16,8 +16,13 @@ import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.dto.ProductDto;
 import pl.exercise.warehouse.mapper.ProductMapper;
+import pl.exercise.warehouse.model.Producer;
 import pl.exercise.warehouse.model.Product;
 import pl.exercise.warehouse.service.ProductService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -86,6 +91,35 @@ class ProductControllerTest {
         var result = mvcResult.getResponse().getContentAsString();
 
         assertEquals("", result);
+    }
+
+    @Test
+    @DisplayName("Find all products - return products list")
+    void shouldFindAllProducts() throws Exception {
+        var product1 = prepareProductDto();
+        var product2 = prepareProductDto();
+        var product3 = prepareProductDto();
+        List<Product> expected = new ArrayList<>();
+        expected.add(mapper.toProduct(product1));
+        expected.add(mapper.toProduct(product2));
+        expected.add(mapper.toProduct(product3));
+
+        when(service.getAll()).thenReturn(expected);
+
+        var mvcResult = mockMvc.perform(
+                get("/api/product/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status()
+                    .isOk()
+                ).andReturn();
+
+        var jsonString = mvcResult.getResponse().getContentAsString();
+        Product[] products = objectMapper.readValue(jsonString, Product[].class);
+        List<Product> result = Arrays.asList(products);
+
+        assertEquals(expected, result);
+        assertEquals(3, result.size());
     }
 
 
