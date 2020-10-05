@@ -30,11 +30,14 @@ public class CategoryController {
             Category _category = categoryMapper.toCategory(category);
             Category addedCategory = categoryService.add(_category);
             CategoryDto categoryDto = categoryMapper.toCategoryDto(addedCategory);
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+            System.out.println(categoryDto.getId());
+
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
-                    .buildAndExpand(addedCategory.getId())
+                    .buildAndExpand(categoryDto.getId())
                     .toUri();
-            return ResponseEntity.created(uri).body(categoryDto);
+
+            return ResponseEntity.created(location).build();
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
