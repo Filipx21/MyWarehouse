@@ -16,7 +16,6 @@ import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.dto.ProductDto;
 import pl.exercise.warehouse.mapper.ProductMapper;
-import pl.exercise.warehouse.model.Producer;
 import pl.exercise.warehouse.model.Product;
 import pl.exercise.warehouse.service.ProductService;
 
