@@ -25,6 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -185,6 +186,20 @@ class ProductControllerTest {
         assertEquals("", result);
     }
 
+    @Test
+    @DisplayName("Delete product - delete from db")
+    void shouldDeleteProductFromDb() throws Exception {
+        var idProducerToDelete = 1L;
+
+        when(service.deleteById(idProducerToDelete)).thenReturn(true);
+
+        mockMvc.perform(delete("/api/product/product/{id}", idProducerToDelete)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isNoContent()
+                );
+    }
 
 
 
