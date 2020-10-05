@@ -27,6 +27,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Product Controller")
@@ -140,6 +141,31 @@ class ProductControllerTest {
 
         assertEquals("", result);
     }
+
+    @Test
+    @DisplayName("Save product - return URI")
+    void shouldSaveProduct() throws Exception {
+        var productFromWeb = prepareProductDto();
+        var expected = mapper.toProduct(productFromWeb);
+
+        when(service.add(expected)).thenReturn(expected);
+
+        var mvcResult = mockMvc.perform(
+                post("/api/product/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productFromWeb))
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andExpect(status()
+                    .isCreated()
+                ).andReturn();
+
+        var jsonString = mvcResult.getResponse().getContentAsString();
+        var result = objectMapper.readValue(jsonString, Product.class);
+
+        assertEquals(expected, result);
+    }
+
+
 
 
     private ProductDto prepareProductDto() {
