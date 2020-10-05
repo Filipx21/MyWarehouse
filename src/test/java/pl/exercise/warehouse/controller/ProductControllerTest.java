@@ -61,10 +61,10 @@ class ProductControllerTest {
         var mvcResult = mockMvc.perform(
                 get("/api/product/product/{id}", productFromWeb.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status()
-                        .isOk()
-                ).andReturn();
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status()
+                .isOk()
+        ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
         var result = objectMapper.readValue(jsonString, Product.class);
@@ -85,9 +85,9 @@ class ProductControllerTest {
                 get("/api/producer/producer/{id}", productFromWeb.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status()
-                    .isNotFound()
-                ).andReturn();
+        ).andExpect(status()
+                .isNotFound()
+        ).andReturn();
 
         var result = mvcResult.getResponse().getContentAsString();
 
@@ -111,9 +111,9 @@ class ProductControllerTest {
                 get("/api/product/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status()
-                    .isOk()
-                ).andReturn();
+        ).andExpect(status()
+                .isOk()
+        ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
         Product[] products = objectMapper.readValue(jsonString, Product[].class);
@@ -133,9 +133,9 @@ class ProductControllerTest {
                 get("/api/product/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status()
-                    .isInternalServerError()
-                ).andReturn();
+        ).andExpect(status()
+                .isInternalServerError()
+        ).andReturn();
 
         var result = mvcResult.getResponse().getContentAsString();
 
@@ -155,14 +155,35 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productFromWeb))
                         .accept(MediaType.APPLICATION_JSON)
-                ).andExpect(status()
-                    .isCreated()
-                ).andReturn();
+        ).andExpect(status()
+                .isCreated()
+        ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
         var result = objectMapper.readValue(jsonString, Product.class);
 
         assertEquals(expected, result);
+    }
+
+    @Test
+    @DisplayName("Save product - return Error 500")
+    void shouldReturnError500SaveProduct() throws Exception {
+        var productFromWeb = prepareProductDto();
+
+        when(service.add(null)).thenThrow(NullPointerException.class);
+
+        var mvcResult = mockMvc.perform(
+                post("/api/product/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productFromWeb))
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status()
+                .isInternalServerError()
+        ).andReturn();
+
+        var result = mvcResult.getResponse().getContentAsString();
+
+        assertEquals("", result);
     }
 
 
