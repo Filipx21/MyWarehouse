@@ -21,15 +21,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import pl.exercise.warehouse.controller.config.REST_TestConfig;
+import pl.exercise.warehouse.config.AppConfig;
 import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.mapper.CategoryMapper;
 import pl.exercise.warehouse.service.CategoryService;
 
+
 @DisplayName("Category Controller")
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = CategoryController.class)
-@ComponentScan(basePackageClasses = {REST_TestConfig.class})
+@ComponentScan(basePackageClasses = {AppConfig.class})
 class CategoryControllerTest {
 
     @Autowired

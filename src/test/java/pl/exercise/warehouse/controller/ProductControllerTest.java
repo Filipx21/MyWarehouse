@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.exercise.warehouse.controller.config.REST_TestConfig;
+import pl.exercise.warehouse.config.AppConfig;
 import pl.exercise.warehouse.dto.CategoryDto;
 import pl.exercise.warehouse.dto.ProducerDto;
 import pl.exercise.warehouse.dto.ProductDto;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Product Controller")
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = ProductController.class)
-@ComponentScan(basePackageClasses = {REST_TestConfig.class})
+@ComponentScan(basePackageClasses = {AppConfig.class})
 class ProductControllerTest {
 
     @Autowired
