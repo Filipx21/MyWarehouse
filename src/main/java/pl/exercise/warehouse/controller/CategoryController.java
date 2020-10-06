@@ -37,7 +37,7 @@ public class CategoryController {
                     .buildAndExpand(categoryDto.getId())
                     .toUri();
 
-            return ResponseEntity.created(location).build();
+            return ResponseEntity.created(location).body(categoryDto);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
