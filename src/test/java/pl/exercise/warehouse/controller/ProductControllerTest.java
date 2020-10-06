@@ -25,9 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Product Controller")
@@ -63,7 +61,7 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                    .isOk()
+                        .isOk()
                 ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
@@ -86,7 +84,7 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                    .isNotFound()
+                        .isNotFound()
                 ).andReturn();
 
         var result = mvcResult.getResponse().getContentAsString();
@@ -112,7 +110,7 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                    .isOk()
+                        .isOk()
                 ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
@@ -134,7 +132,7 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                    .isInternalServerError()
+                        .isInternalServerError()
                 ).andReturn();
 
         var result = mvcResult.getResponse().getContentAsString();
@@ -156,7 +154,7 @@ class ProductControllerTest {
                         .content(objectMapper.writeValueAsString(productFromWeb))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status()
-                    .isCreated()
+                        .isCreated()
                 ).andReturn();
 
         var jsonString = mvcResult.getResponse().getContentAsString();
@@ -189,11 +187,25 @@ class ProductControllerTest {
     @Test
     @DisplayName("Update product - return product")
     void shouldUpdateProduct() throws Exception {
+        var productFromWeb = prepareProductDto();
+        productFromWeb.setId(1L);
+        var expected = mapper.toProduct(productFromWeb);
 
+        when(service.update(expected)).thenReturn(expected);
 
-        //not finished
+        var mvcResult = mockMvc.perform(
+                put("/api/product/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productFromWeb))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isOk()
+                ).andReturn();
 
+        var jsonString = mvcResult.getResponse().getContentAsString();
+        var result = objectMapper.readValue(jsonString, Product.class);
 
+        assertEquals(expected, result);
     }
 
     @Test
