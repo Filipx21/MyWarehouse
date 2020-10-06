@@ -209,13 +209,26 @@ class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Update product - return error 500")
+    @DisplayName("Update product with id 0 - return error 500")
     void shouldReturnError500UpdateProduct() throws Exception {
+        var productFromWeb = prepareProductDto();
+        productFromWeb.setId(0L);
+        var product = mapper.toProduct(productFromWeb);
 
+        when(service.update(product)).thenThrow(NullPointerException.class);
 
-        //not finished
+        var mvcResult = mockMvc.perform(
+                put("/api/product/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productFromWeb))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isInternalServerError()
+                ).andReturn();
 
+        var result = mvcResult.getResponse().getContentAsString();
 
+        assertEquals("", result);
     }
 
     @Test
