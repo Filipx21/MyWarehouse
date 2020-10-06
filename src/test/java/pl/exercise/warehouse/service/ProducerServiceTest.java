@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Test Producer")
+@DisplayName("Producer Service")
 @ExtendWith(MockitoExtension.class)
 class ProducerServiceTest {
 

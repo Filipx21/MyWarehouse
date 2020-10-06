@@ -51,14 +51,16 @@ public class ProducerService {
         throw new NullPointerException("Problem while adding producer");
     }
 
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Optional<Producer> optionalProduct = producerRepository.findById(id);
         if (optionalProduct.isPresent()) {
-            logger.info("Producer deleted");
             producerRepository.deleteById(id);
+            logger.info("Producer deleted");
+            return true;
+        } else {
+            logger.warn("Problem while deleting producer");
+            throw new NullPointerException("Problem while deleting producer");
         }
-        logger.warn("Problem while deleting producer");
-        throw new NullPointerException("Problem while deleting producer");
     }
 
 }
