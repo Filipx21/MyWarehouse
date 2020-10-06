@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Test Product")
+@DisplayName("Product Service")
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
