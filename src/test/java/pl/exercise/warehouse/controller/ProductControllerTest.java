@@ -232,6 +232,28 @@ class ProductControllerTest {
     }
 
     @Test
+    @DisplayName("Update product without id - return error 500")
+    void shouldReturnError500UpdateProductWithoutId() throws Exception {
+        var productFromWeb = prepareProductDto();
+        var product = mapper.toProduct(productFromWeb);
+
+        when(service.update(product)).thenThrow(NullPointerException.class);
+
+        var mvcResult = mockMvc.perform(
+                put("/api/product/product")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(productFromWeb))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status()
+                        .isInternalServerError()
+                ).andReturn();
+
+        var result = mvcResult.getResponse().getContentAsString();
+
+        assertEquals("", result);
+    }
+
+    @Test
     @DisplayName("Delete product - delete from db")
     void shouldDeleteProductFromDb() throws Exception {
         var idProductToDelete = 1L;
