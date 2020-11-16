@@ -14,6 +14,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/category")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoryController {
 
     private CategoryService categoryService;

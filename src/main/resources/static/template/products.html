@@ -1,0 +1,134 @@
+<div style="width: 100%;">
+	<div class="container">
+		<div ng-show="productCtrl.option">
+			<table class="table-dark">
+				<tbody>
+					<tr ng-repeat="c in productCtrl.products">
+						<td ng-hide="true">
+							{{c.id}}
+						</td>
+						<td style="display: flex; flex-direction: row; padding: 1%;">
+							<img ng-src="{{c.photoUri}}" onError="this.onerror=null;this.src='/img/default.png';" alt="{{c.name}}" />
+							<div class="product-details">
+								<h5>{{c.name}}</h5>
+								<span>Cena: {{c.price | currency : '' : 2}} zł</span>
+								<span>Ilość: {{c.quantity}}</span>
+								<span>Opinia: {{c.opinion}}</span>
+								<a ng-click="productCtrl.fetchProduct(c.id)" class="btn btn-outline-danger">Szczegóły</a>
+							</div>
+						</td>
+						<td>
+							<a ng-click="productCtrl.editProduct(c.id)" class="btn btn-outline-danger">Edytuj</a>
+						</td>
+						<td>
+							<a ng-click="productCtrl.fetchProduct(c.id)" class="btn btn-outline-danger">Edytuj</a>
+						</td>
+						<td>
+							<button ng-click="productCtrl.removeProduct(c.id)" class="btn btn-outline-danger">Usuń</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!--
+			<pagination ng-model="currentPage" total-items="todos.length" max-size="maxSize" boundary-links="true">
+			</pagination>
+-->
+		</div>
+
+
+		<div ng-show="!productCtrl.option" style="width: 50%;">
+			<form name="productForm" id="productForm" ng-submit="productCtrl.submit()" class="form-horizontal">
+				<input type="hidden" ng-model="productCtrl.product.id">
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="name">Nazwa produktu</label>
+						<input id="name" name="name" type="text" class="form-control input-sm" ng-model="productCtrl.product.name" placeholder="Podaj nazwe produktu" required ng-minlength="2">
+						<div class="has-error" ng-show="productForm.name.$dirty">
+							<span class="span-has-error" ng-show="productForm.name.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.name.$error.minlength">Minimalna długość: 2</span>
+							<span class="span-has-error" ng-show="productForm.name.$invalid">Niepoprawny ciag znaków</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="quantity">Ilość</label>
+						<input id="quantity" name="quantity" type="text" class="form-control input-sm" ng-model="productCtrl.product.quantity" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.quantity.$dirty">
+							<span class="span-has-error" ng-show="productForm.quantity.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.quantity.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="price">Cena</label>
+						<input id="price" name="price" type="text" class="form-control input-sm" ng-model="productCtrl.product.price" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.price.$dirty">
+							<span class="span-has-error" ng-show="productForm.price.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.price.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="producer">Ilość</label>
+						<input id="producer" name="producer" type="text" class="form-control input-sm" ng-model="productCtrl.product.producer.name" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.producer.$dirty">
+							<span class="span-has-error" ng-show="productForm.producer.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.producer.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="category">Ilość</label>
+						<input id="category" name="category" type="text" class="form-control input-sm" ng-model="productCtrl.product.category.name" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.category.$dirty">
+							<span class="span-has-error" ng-show="productForm.category.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.category.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="photoUri">Ilość</label>
+						<input id="photoUri" name="photoUri" type="text" class="form-control input-sm" ng-model="productCtrl.product.photoUri" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.photoUri.$dirty">
+							<span class="span-has-error" ng-show="productForm.photoUri.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.photoUri.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="" style="color: white;" for="opinion">Ilość</label>
+						<input id="opinion" name="opinion" type="text" class="form-control input-sm" ng-model="productCtrl.product.opinion" placeholder="Podaj producenta pojazdu" required ng-minlength="3">
+						<div class="has-error" ng-show="productForm.photoUri.$dirty">
+							<span class="span-has-error" ng-show="productForm.opinion.$error.required">Pole nie może byc puste</span>
+							<span class="span-has-error" ng-show="productForm.opinion.$error.minlength">Minimalna długość: 3</span>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="row">
+					<div class="form-actions floatRight">
+						<input type="submit" value="{{!productCtrl.product.id ? 'Dodaj' : 'Edytuj'}}" class="btn btn-outline-danger" ng-disabled="productForm.submit.$invalid">
+						<button type="button" ng-click="productCtrl.reset()" class="btn btn-warning btn-sm" ng-disabled="productForm.$pristine">
+							Reset Form
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+</div>
