@@ -22,9 +22,14 @@ module.controller("productCtrl", ["$scope", '$http', '$filter', '$location', "Pr
 
 		self.editProduct = editProduct;
 		self.removeProduct = removeProduct;
+		self.showDetails = showDetails;
 		self.submit = submit;
-		self.reset = reset;
-		self.option = true;
+		self.resetForm = resetForm;
+		self.goBack = goBack;
+		self.optionList = true;
+		self.optionEdit = false;
+		self.optionDetails = false;
+
 
 		fetchAllProducts();
 
@@ -41,17 +46,25 @@ module.controller("productCtrl", ["$scope", '$http', '$filter', '$location', "Pr
 		}
 
 		function fetchProduct(id) {
-			console.log('dziala');
-			self.option = false;
 			ProductService.fetchProduct(id)
 				.then(
 					function (object) {
-						self.product = object;
+						self.product = object.data;
+						console.log(self.product);
 					},
 					function (errResponse) {
 						console.log('Error while fetching product: ' + errResponse);
 					}
 				);
+		}
+
+		function showDetails(id) {
+			if (id === null) {
+				console.log("id null");
+			}
+			fetchProduct(id);
+			self.optionList = false;
+			self.optionDetails = true;
 		}
 
 		function createProduct(product) {
@@ -95,6 +108,11 @@ module.controller("productCtrl", ["$scope", '$http', '$filter', '$location', "Pr
 				photoUri: null,
 				opinion: null
 			};
+
+		}
+
+		function resetForm() {
+			reset();
 			$scope.productForm.$setPristine();
 		}
 
@@ -104,11 +122,14 @@ module.controller("productCtrl", ["$scope", '$http', '$filter', '$location', "Pr
 			} else {
 				updateProduct(self.product);
 				reset();
+				self.optionList = true;
+				self.optionEdit = false;
 			}
 		}
 
 		function editProduct(id) {
-			self.option = false;
+			self.optionList = false;
+			self.optionEdit = true;
 			for (var i = 0; i < self.products.length; i++) {
 				if (self.products[i].id === id) {
 					self.product = angular.copy(self.products[i]);
@@ -117,11 +138,18 @@ module.controller("productCtrl", ["$scope", '$http', '$filter', '$location', "Pr
 			}
 		}
 
-		function removeProduct() {
+		function removeProduct(id) {
 			if (self.product.id === null) {
 				reset();
 			}
 			deleteProduct(id);
+		}
+
+		function goBack() {
+			reset();
+			self.optionDetails = false;
+			self.optionEdit = false;
+			self.optionList = true;
 		}
 
 }]);

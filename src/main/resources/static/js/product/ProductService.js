@@ -19,7 +19,6 @@ angular.module('product.service', [])
 				.then(
 					function (response) {
 						deferred.resolve(response.data);
-						console.log(response.data);
 					},
 					function (errResponse) {
 						deferred.reject(errResponse);

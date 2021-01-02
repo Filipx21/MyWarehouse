@@ -1,9 +1,32 @@
 <div style="width: 100%;">
 	<div class="container">
-		<div ng-show="productCtrl.option">
+
+		<div class="list-layout" ng-show="productCtrl.optionList">
+			<!--
+			<div>
+				<input type="text" ng-model="productFilter.name" />
+			</div>
+-->
+			<div class="list-search">
+				<!--				<input class="form-control form-control-sm ml-3 w-75" type="text" ng-model="productFilter.name" placeholder="Search" aria-label="Search">-->
+
+
+
+				<div class="container h-100">
+					<div class="d-flex justify-content-center h-100">
+						<div class="searchbar">
+							<input class="search_input" type="text" ng-model="productFilter.name" placeholder="Wyszukaj...">
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
 			<table class="table-dark">
 				<tbody>
-					<tr ng-repeat="c in productCtrl.products">
+					<tr ng-repeat="c in productCtrl.products | filter:productFilter">
 						<td ng-hide="true">
 							{{c.id}}
 						</td>
@@ -14,17 +37,12 @@
 								<span>Cena: {{c.price | currency : '' : 2}} zł</span>
 								<span>Ilość: {{c.quantity}}</span>
 								<span>Opinia: {{c.opinion}}</span>
-								<a ng-click="productCtrl.fetchProduct(c.id)" class="btn btn-outline-danger">Szczegóły</a>
 							</div>
-						</td>
-						<td>
-							<a ng-click="productCtrl.editProduct(c.id)" class="btn btn-outline-danger">Edytuj</a>
-						</td>
-						<td>
-							<a ng-click="productCtrl.fetchProduct(c.id)" class="btn btn-outline-danger">Edytuj</a>
-						</td>
-						<td>
-							<button ng-click="productCtrl.removeProduct(c.id)" class="btn btn-outline-danger">Usuń</button>
+							<div class="product-details-buttons">
+								<a ng-click="productCtrl.showDetails(c.id)" class="btn btn-outline-danger">Szczegóły</a>
+								<a ng-click="productCtrl.editProduct(c.id)" class="btn btn-outline-danger">Edytuj</a>
+								<button ng-click="productCtrl.removeProduct(c.id)" class="btn btn-outline-danger">Usuń</button>
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -36,7 +54,7 @@
 		</div>
 
 
-		<div ng-show="!productCtrl.option" style="width: 50%;">
+		<div ng-show="productCtrl.optionEdit" style="width: 50%;">
 			<form name="productForm" id="productForm" ng-submit="productCtrl.submit()" class="form-horizontal">
 				<input type="hidden" ng-model="productCtrl.product.id">
 				<div class="row">
@@ -121,14 +139,26 @@
 				<div class="row">
 					<div class="form-actions floatRight">
 						<input type="submit" value="{{!productCtrl.product.id ? 'Dodaj' : 'Edytuj'}}" class="btn btn-outline-danger" ng-disabled="productForm.submit.$invalid">
-						<button type="button" ng-click="productCtrl.reset()" class="btn btn-warning btn-sm" ng-disabled="productForm.$pristine">
+						<button type="button" ng-click="productCtrl.resetForm()" class="btn btn-warning btn-sm" ng-disabled="productForm.$pristine">
 							Reset Form
 						</button>
+						<a ng-click="productCtrl.goBack()" class="btn btn-outline-danger">Wróć</a>
 					</div>
 				</div>
 			</form>
 		</div>
 
+
+		<div ng-show="productCtrl.optionDetails" style="width: 50%;">
+			Nazwa: {{productCtrl.product.name}}
+			Ilość: {{productCtrl.product.quantity}}
+			Cena: {{productCtrl.product.price}}
+			Producent: {{productCtrl.product.producer.name}}
+			Kategoria: {{productCtrl.product.category.name}}
+			Zdjecie: {{productCtrl.product.photoUri}}
+			Opinia: {{productCtrl.product.opinion}}
+			<a ng-click="productCtrl.goBack()" class="btn btn-outline-danger">Wróć</a>
+		</div>
 
 	</div>
 </div>
