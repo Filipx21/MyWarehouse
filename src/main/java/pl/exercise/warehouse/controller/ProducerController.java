@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/producer")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProducerController {
 
     private ProducerService producerService;

@@ -11,7 +11,7 @@ public class ProductDto {
     private long id;
     @Size(min = 2, max = 50)
     private String name;
-    @Min(1)
+    @Min(0)
     private int quantity;
     @DecimalMin(value = "0.0", inclusive = false)
     private double price;
