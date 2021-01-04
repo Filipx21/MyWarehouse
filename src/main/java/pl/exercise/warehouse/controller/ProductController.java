@@ -43,6 +43,7 @@ public class ProductController {
     public ResponseEntity getAllProducts() {
         try {
             List<Product> products = productService.getAll();
+            products.stream().forEach(x -> System.out.println(x));
             List<ProductDto> productsDto = products.stream()
                     .map(productMapper::toProductDto)
                     .collect(Collectors.toList());
@@ -55,15 +56,20 @@ public class ProductController {
     @PostMapping("/product")
     public ResponseEntity<ProductDto> saveProduct(@Valid @RequestBody ProductDto product) {
         try {
+            System.out.println("1 ->" + product.toString());
             Product _product = productMapper.toProduct(product);
+            System.out.println("2 ->" + _product.toString());
             Product addedProduct = productService.add(_product);
+            System.out.println("3 ->" + addedProduct.toString());
             ProductDto productDto = productMapper.toProductDto(addedProduct);
+            System.out.println("4 ->" + productDto.toString());
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(addedProduct.getId())
                     .toUri();
             return ResponseEntity.created(uri).body(productDto);
         } catch (Exception ex) {
+            System.out.println("Tutaj cos sie stało");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

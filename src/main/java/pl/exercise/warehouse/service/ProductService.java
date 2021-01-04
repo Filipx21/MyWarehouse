@@ -24,8 +24,9 @@ public class ProductService {
 
     public Product add(Product product) {
         Product copy = product;
-        if (copy != null) {
+        if (copy != null && copy.getId() <= 0) {
             logger.info("Product added");
+            System.out.println(copy.toString());
             return productRepository.save(copy);
         }
         logger.warn("Problem while adding product");
